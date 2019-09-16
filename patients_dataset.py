@@ -72,7 +72,7 @@ class PatientsDataset(Dataset):
                 print('Loaded dataset from cache.')
         else:
             self.loaddata()
-            self.cache_dataset()
+            self.cache_dataset(force_recache)
             print('Loaded dataset and stored in cache.')
 
     def __len__(self):
