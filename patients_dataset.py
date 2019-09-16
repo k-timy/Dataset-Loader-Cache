@@ -40,18 +40,18 @@ class PatientsDataset(Dataset):
             self.dataset.append((vals,pid))
 
 
-    def cache_dataset(self):
+    def cache_dataset(self,force_recache=False):
         """
         # Store the preprocessed data in a single file
         # if a cache file is not already available
         :return: does not return anything.
         """
-        if os.path.exists(self.cache_file_name):
+        if os.path.exists(self.cache_file_name) and not force_recache:
             return
         else:
             with open(self.cache_file_name, 'wb') as f:
                 pickle.dump(self.dataset, f)
-
+                
     # Load data from cache file
     def load_from_cache(self,force_recache=False):
         """
@@ -64,7 +64,7 @@ class PatientsDataset(Dataset):
         if os.path.exists(self.cache_file_name):
             if force_recache == True:
                 self.loaddata()
-                self.cache_dataset()
+                self.cache_dataset(force_recache)
                 print('Loaded dataset and stored in cache.')
             else:
                 with open(self.cache_file_name, 'rb') as f:
